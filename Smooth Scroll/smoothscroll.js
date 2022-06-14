@@ -18,6 +18,9 @@ $("nav ul li a").click(function(){
         thisLink.addClass('selected') ;
 
     }) ;
+
+    // Same as prevent default method 
+    return false ;
 })
 
 $(window).on('load',function(){
@@ -26,12 +29,12 @@ $(window).on('load',function(){
     var pageTop ;
     var postPos ;
     var counter= 0 ;
+    var prevCounter = 0 ;
+    var alllinks = $("nav ul li a") ;
+    var doneResizing ;
 
     var postTops = [] ;
-
-    posts.each(function(){
-        postTops.push(Math.floor($(this).offset().top)) ;
-    }) ;
+    resetPagePosition() ;
 
 
 
@@ -44,12 +47,47 @@ $(window).on('load',function(){
 
         if(pagetop > postTops[counter + 1]){
             counter++ ; 
-            console.log(`scrolling down ${counter}`) ;
         }else if(counter > 0 && pagetop < postTops[counter]){
             counter-- ;
-            console.log(`scrolling up ${counter}`) ;
-         }
+        }
+
+        if(counter != prevCounter){
+            $(alllinks).removeAttr('class') ;
+            $("nav ul li a").eq(counter).addClass("selected") ;
+            prevCounter = counter ;
+        }
         
     }) ;
+
+    $(window).on("resize", function(){
+        clearTimeout(doneResizing) ;
+        doneResizing = setTimeout(resetPagePosition , 500) ;
+    })
+
+    function resetPagePosition(){
+        postTops = [] ;
+        posts.each(function(){
+            postTops.push(Math.floor($(this).offset().top)) ;
+        }) ;
+
+        var pagePosition = $(window).scrollTop() ;
+        counter = 0 ;
+
+        for(var i = 0 ; i < postTops.length ; i++){
+            if(pagePosition > postTops[i]){
+                counter++ ;
+            }
+        }
+
+        if(counter != 0){
+            counter-- ;
+        }
+
+        console.log(counter) ;
+
+        $(alllinks).removeAttr("class") ;
+        $("nav ul li a").eq(counter).addClass("selected") ;
+    }
+
 }) ;
 
