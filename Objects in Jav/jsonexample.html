@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON Data</title>
+</head>
+
+<body>
+	
+	<h1>Working with JSON Data</h1>
+	
+	<p>Usually JSON data will come from an external source, such as a database, or an API (Application Programming Interface), such as Google Maps or from Twitter. In this file, we are simply including the JSON directly.</p>
+	
+	<script>
+		
+		var json = {
+			firstname : "Yenosibina" ,
+			lastname : "Makanjuola" ,
+			pets : ["dog" , "cats" , "chicken"] , 
+			phonenumber: {
+				home : "916-834-2832" ,
+				mobile : "916-283-2463" ,
+				cell : "914-666-7272"
+			} ,
+			greeting: function(){console.log(`Hello ${this.firstname} ${this.lastname}`)} 
+		} ;
+
+		// console.log(json.firstname) ;
+		// json.greeting() ;
+
+		function Person(first , last , age, eye){
+			this.firstname = first ;
+			this.lastname = last ; 
+			this.age = age ;
+			this.eye = eye ;
+		}
+
+		var Mymother = new Person("Andrew" , "Josh" , 34 , "blue" ) ;
+	
+	</script>
+	
+</body>
+</html>
